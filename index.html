@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LicitaAI - IA para Licitações da Prefeitura</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="shortcut icon" href="./assets/Gemini_Generated_Image_2c7j1p2c7j1p2c7j.png" type="image/x-icon">
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <div class="logo">
+          <img src="./assets/logo_2-removebg-preview.png" alt="LicitaAI Logo" class="logo-img" />
+          <h1>LicitHub</h1>
+        </div>
+        <div class="header-right">
+
+        <button id="newChatBtn" class="new-chat-btn">
+          <i class="fas fa-plus"></i>
+          Nova Conversa
+        </button>
+        <div class="menu" onclick="toggleMenu()">&#9776;</div>
+    <nav id="menu">
+
+    
+    </nav>
+      </header>
+
+      <!-- Chat Container -->
+      <main class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <!-- Welcome Message -->
+          <div class="message ai-message">
+            <div class="message-avatar">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div class="message-content">
+              <div class="message-text">
+                <h3>Olá! Sou o LicitHub 🤖</h3>
+                <p>
+                  Posso ajudar você a encontrar licitações da prefeitura de
+                  forma inteligente. Me pergunte sobre:
+                </p>
+                <ul>
+                  <li>
+                    Licitações por modalidade
+                  </li>
+                  <li>Licitações por órgão ou secretaria</li>
+                  <li>Licitações por valor ou prazo</li>
+                  <li>Status das licitações</li>
+                </ul>
+                <p>Como posso ajudar você hoje?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+          <div class="input-wrapper">
+            <textarea
+              id="messageInput"
+              placeholder="Digite sua pergunta sobre licitações..."
+              rows="1"
+              autocomplete="off"
+            ></textarea>
+            <button id="sendButton" class="send-button">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+          <div class="input-footer">
+            <p>
+              LicitaAI pode cometer erros. Verifique informações importantes.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

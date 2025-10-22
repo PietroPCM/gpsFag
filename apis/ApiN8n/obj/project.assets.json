@@ -75,19 +75,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\phyta\\.nuget\\packages\\": {}
+    "C:\\Users\\sofia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\phyta\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj",
+      "projectUniqueName": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
       "projectName": "ApiN8n",
-      "projectPath": "C:\\Users\\phyta\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj",
-      "packagesPath": "C:\\Users\\phyta\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\phyta\\Hackathon\\apis\\ApiN8n\\obj\\",
+      "projectPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
+      "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\phyta\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -141,7 +141,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

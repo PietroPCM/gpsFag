@@ -31,3 +31,36 @@ c:\Users\phyta\Hackathon\apis\ApiN8n\obj\Debug\net9.0\refint\ApiN8n.dll
 c:\Users\phyta\Hackathon\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.pdb
 c:\Users\phyta\Hackathon\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.genruntimeconfig.cache
 c:\Users\phyta\Hackathon\apis\ApiN8n\obj\Debug\net9.0\ref\ApiN8n.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\appsettings.Development.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\appsettings.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.staticwebassets.endpoints.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.exe
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.deps.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.runtimeconfig.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\ApiN8n.pdb
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.csproj.AssemblyReference.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.AssemblyInfoInputs.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.AssemblyInfo.cs
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.csproj.CoreCompileInputs.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.sourcelink.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\rjimswa.dswa.cache.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\scopedcss\bundle\ApiN8n.styles.css
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\staticwebassets.build.json.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\staticwebassets.development.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.csproj.Up2Date
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\refint\ApiN8n.dll
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.pdb
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ApiN8n.genruntimeconfig.cache
+C:\Users\sofia\OneDrive\Área de Trabalho\eng.software\hackathon\Hackathon-1\apis\ApiN8n\obj\Debug\net9.0\ref\ApiN8n.dll

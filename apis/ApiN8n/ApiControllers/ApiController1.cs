@@ -5,11 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Cors;
 
 namespace ApiN8n.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [EnableCors("AllowAll")]
     public class ApiController1 : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -26,7 +28,7 @@ namespace ApiN8n.ApiControllers
         public class ChatRequest
         {
             [Required(AllowEmptyStrings = false)]
-            public string? Text { get; set; }
+            public string? Mensagem { get; set; }
         }
 
         [HttpPost("chat")]
@@ -45,37 +47,34 @@ namespace ApiN8n.ApiControllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "n8n webhook URL is not configured." });
             }
 
-            _logger.LogInformation("Received chat request; forwarding to n8n. Text length={Length}", request.Text?.Length ?? 0);
+            _logger.LogInformation("Recebida solicitação de chat; encaminhando para n8n. Tamanho da mensagem={Length}", request.Mensagem?.Length ?? 0);
 
             try
             {
                 var client = _httpClientFactory.CreateClient("n8n");
 
-                var n8nPayload = new { text = request.Text };
+                var n8nPayload = new { text = request.Mensagem };
 
-                using var resp = await client.PostAsJsonAsync(string.Empty, n8nPayload);
+                using var resp = await client.PostAsJsonAsync(webhookUrl, n8nPayload);
 
                 var bodyString = await resp.Content.ReadAsStringAsync();
-                var contentType = resp.Content.Headers.ContentType?.ToString() ?? "application/json";
-                var statusCode = (int)resp.StatusCode;
+                _logger.LogInformation("n8n response body: {Body}", bodyString);
 
-                _logger.LogInformation("n8n responded with status {Status} and content-type {ContentType}", statusCode, contentType);
-
-                if (contentType.Contains("application/json"))
+                if (!resp.IsSuccessStatusCode)
                 {
-                    try
-                    {
-                        var jsonObj = System.Text.Json.JsonSerializer.Deserialize<object>(bodyString);
-                        return StatusCode(statusCode, jsonObj);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning(ex, "Failed to deserialize JSON from n8n; returning raw body.");
-                        return new ContentResult { Content = bodyString, ContentType = contentType, StatusCode = statusCode };
-                    }
+                    _logger.LogWarning("n8n responded with status {Status}", resp.StatusCode);
+                    return StatusCode((int)resp.StatusCode, new { mensagem = "Erro ao processar sua solicitação." });
                 }
 
-                return new ContentResult { Content = bodyString, ContentType = contentType, StatusCode = statusCode };
+                try
+                {
+                    return Ok(new { resposta = bodyString });
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Error processing n8n response");
+                    return Ok(new { resposta = "Desculpe, houve um erro ao processar a resposta." });
+                }
             }
             catch (Exception ex)
             {

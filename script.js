@@ -35,48 +35,65 @@ function mostrarTypingIndicator() {
 }
 
 
-/*async function enviarMensagem() {
+function adicionarMensagemBot(texto) {
+    const div = document.createElement('div');
+    div.classList.add('message', 'ai-message');
+    div.innerHTML = `
+        <div class="message-avatar"><i class="fas fa-robot"></i></div>
+        <div class="message-content">
+            <div class="message-text"><p>${texto}</p></div>
+        </div>
+    `;
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function enviarMensagem() {
     const mensagem = messageInput.value.trim();
     if (!mensagem) return;
 
-    
     adicionarMensagemUsuario(mensagem);
     messageInput.value = '';
 
-    
     const typingDiv = mostrarTypingIndicator();
 
     try {
-        await fetch('', {
+        const response = await fetch('http://localhost:5180/api/ApiController1/chat', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ mensagem })
+            headers: { 
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ mensagem: mensagem })
         });
-    } catch (error) {
-        console.error('Erro ao enviar mensagem para o backend:', error);
+
+        if (!response.ok) {
+            throw new Error(`Erro na requisição: ${response.status}`);
+        }
+
+        const texto = await response.text();
+        let resultado;
+        
+        try {
+            resultado = JSON.parse(texto);
+            if (resultado && resultado.resposta) {
+                adicionarMensagemBot(resultado.resposta);
+            } else if (typeof resultado === 'string') {
+                adicionarMensagemBot(resultado);
+            } else {
+                console.log('Resposta do servidor:', resultado);
+                adicionarMensagemBot("Recebido, mas formato inesperado.");
+            }
+        } catch (parseError) {
+            console.log('Texto recebido:', texto);
+            adicionarMensagemBot(texto);
+        }
+    } catch (erro) {
+        console.error('Erro:', erro);
+        adicionarMensagemBot("Não foi possível processar sua mensagem. Por favor, tente novamente.");
     } finally {
-       
         chatMessages.removeChild(typingDiv);
     }
-}*/
-
-//para teste
-try {
-    const response = await fetch('https://localhost:5290/api/ManController1/enviar', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mensagem })
-    });
-
-    const resultado = await response.json(); // pega o JSON retornado pelo backend
-    if (resultado.resposta) {
-        adicionarMensagemBot(resultado.resposta); // mostra no chat
-    }
-} catch (error) {
-    console.error(error);
-    adicionarMensagemBot("Erro ao enviar mensagem para o backend.");
-} finally {
-    chatMessages.removeChild(typingDiv);
 }
 
 

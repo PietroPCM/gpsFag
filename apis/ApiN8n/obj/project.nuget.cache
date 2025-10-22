@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "ajhHiPLgh+Q=",
+  "dgSpecHash": "ONuDCgia1jg=",
   "success": true,
-  "projectFilePath": "C:\\Users\\phyta\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj",
+  "projectFilePath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\phyta\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.8\\microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
-    "C:\\Users\\phyta\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+    "C:\\Users\\sofia\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.8\\microsoft.aspnetcore.openapi.9.0.8.nupkg.sha512",
+    "C:\\Users\\sofia\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
   ],
   "logs": []
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj": {}
+    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiLogin\\ApiLogin.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj": {
+    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiLogin\\ApiLogin.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
-        "projectName": "ApiN8n",
-        "projectPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
+        "projectUniqueName": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiLogin\\ApiLogin.csproj",
+        "projectName": "ApiLogin",
+        "projectPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiLogin\\ApiLogin.csproj",
         "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\obj\\",
+        "outputPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiLogin\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -44,9 +44,19 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.10, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.10, )"
             }
           },
           "imports": [

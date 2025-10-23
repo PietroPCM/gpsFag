@@ -36,8 +36,8 @@ namespace ApiN8n.ApiControllers
         {
             if (!ModelState.IsValid)
             {
-                _logger.LogWarning("Invalid request to /chat: {ModelState}", ModelState);
-                return BadRequest(new { error = "Request must contain a non-empty 'text' field." });
+                _logger.LogWarning("Requisição inválida para /chat: {ModelState}", ModelState);
+                return BadRequest(new { erro = "A requisição deve conter o campo 'mensagem' não vazio." });
             }
 
             var webhookUrl = _configuration.GetValue<string>("N8n:WebhookUrl");
@@ -58,28 +58,26 @@ namespace ApiN8n.ApiControllers
                 using var resp = await client.PostAsJsonAsync(webhookUrl, n8nPayload);
 
                 var bodyString = await resp.Content.ReadAsStringAsync();
-                _logger.LogInformation("n8n response body: {Body}", bodyString);
+                _logger.LogInformation("n8n - tamanho do corpo da resposta: {Length}", bodyString?.Length ?? 0);
 
                 if (!resp.IsSuccessStatusCode)
                 {
-                    _logger.LogWarning("n8n responded with status {Status}", resp.StatusCode);
-                    return StatusCode((int)resp.StatusCode, new { mensagem = "Erro ao processar sua solicitação." });
+                    _logger.LogWarning("n8n respondeu com status {Status}", resp.StatusCode);
+                    return StatusCode((int)resp.StatusCode, new { erro = "Erro ao processar sua solicitação no n8n." });
                 }
 
-                try
+                if (string.IsNullOrWhiteSpace(bodyString))
                 {
-                    return Ok(new { resposta = bodyString });
+                    _logger.LogWarning("n8n retornou corpo vazio para o webhook {Webhook}", webhookUrl);
+                    return Ok(new { resposta = "O workflow do n8n não retornou conteúdo. Verifique se o nó final está configurado para responder." });
                 }
-                catch (Exception ex)
-                {
-                    _logger.LogWarning(ex, "Error processing n8n response");
-                    return Ok(new { resposta = "Desculpe, houve um erro ao processar a resposta." });
-                }
+
+                return Ok(new { resposta = bodyString });
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to contact n8n");
-                return StatusCode(StatusCodes.Status502BadGateway, new { error = "Failed to contact n8n.", details = ex.Message });
+                _logger.LogError(ex, "Falha ao contatar o n8n");
+                return StatusCode(StatusCodes.Status502BadGateway, new { erro = "Falha ao contatar o n8n.", detalhes = ex.Message });
             }
         }
     }

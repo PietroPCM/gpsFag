@@ -76,17 +76,26 @@ async function enviarMensagem() {
         
         try {
             resultado = JSON.parse(texto);
-            if (resultado && resultado.resposta) {
-                adicionarMensagemBot(resultado.resposta);
+            if (resultado && typeof resultado.resposta === 'string') {
+                const respTexto = resultado.resposta.trim();
+                if (respTexto.length === 0) {
+                    adicionarMensagemBot("O workflow do n8n não retornou conteúdo. Verifique o nó final do fluxo.");
+                } else {
+                    adicionarMensagemBot(respTexto);
+                }
             } else if (typeof resultado === 'string') {
                 adicionarMensagemBot(resultado);
             } else {
-                console.log('Resposta do servidor:', resultado);
+                console.log('Resposta do servidor (formato inesperado):', resultado);
                 adicionarMensagemBot("Recebido, mas formato inesperado.");
             }
         } catch (parseError) {
-            console.log('Texto recebido:', texto);
-            adicionarMensagemBot(texto);
+            console.log('Texto recebido (não-JSON):', texto);
+            if (typeof texto === 'string' && texto.trim().length === 0) {
+                adicionarMensagemBot("O workflow do n8n não retornou conteúdo. Verifique o nó final do fluxo.");
+            } else {
+                adicionarMensagemBot(texto);
+            }
         }
     } catch (erro) {
         console.error('Erro:', erro);

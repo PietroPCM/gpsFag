@@ -58,13 +58,13 @@ async function enviarMensagem() {
     const typingDiv = mostrarTypingIndicator();
 
     try {
-        const response = await fetch('http://localhost:5180/api/ApiController1/chat', {
+        const response = await fetch('http://localhost:5180/webhook-test/feecdcd0-f2e5-47cb-a12f-37a5283268f8', {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify({ mensagem: mensagem })
+            body: JSON.stringify({ chatInput: mensagem })
         });
 
         if (!response.ok) {
@@ -73,20 +73,19 @@ async function enviarMensagem() {
 
         const texto = await response.text();
         let resultado;
-        
         try {
             resultado = JSON.parse(texto);
+            console.log('Resposta do servidor:', resultado);
             if (resultado && typeof resultado.resposta === 'string') {
                 const respTexto = resultado.resposta.trim();
-                if (respTexto.length === 0) {
-                    adicionarMensagemBot("O workflow do n8n não retornou conteúdo. Verifique o nó final do fluxo.");
-                } else {
-                    adicionarMensagemBot(respTexto);
-                }
+                adicionarMensagemBot(respTexto);
+            } else if (typeof resultado === 'object') {
+                // Tenta mostrar o primeiro campo string do objeto
+                const valor = resultado.resposta || resultado.message || resultado.text || JSON.stringify(resultado);
+                adicionarMensagemBot(valor);
             } else if (typeof resultado === 'string') {
                 adicionarMensagemBot(resultado);
             } else {
-                console.log('Resposta do servidor (formato inesperado):', resultado);
                 adicionarMensagemBot("Recebido, mas formato inesperado.");
             }
         } catch (parseError) {

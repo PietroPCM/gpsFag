@@ -51,6 +51,9 @@ var app = builder.Build();
 // Ativa o CORS antes de qualquer outro middleware
 app.UseCors("AllowAll");
 
+
+
+
 app.UseRateLimiter();
 
 app.MapControllers();

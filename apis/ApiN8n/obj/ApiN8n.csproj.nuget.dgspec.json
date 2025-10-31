@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj": {}
+    "C:\\Users\\Alessandra\\Documents\\hackaton2\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj": {
+    "C:\\Users\\Alessandra\\Documents\\hackaton2\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
+        "projectUniqueName": "C:\\Users\\Alessandra\\Documents\\hackaton2\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj",
         "projectName": "ApiN8n",
-        "projectPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\ApiN8n.csproj",
-        "packagesPath": "C:\\Users\\sofia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sofia\\OneDrive\\Área de Trabalho\\eng.software\\hackathon\\Hackathon-1\\apis\\ApiN8n\\obj\\",
+        "projectPath": "C:\\Users\\Alessandra\\Documents\\hackaton2\\Hackathon\\apis\\ApiN8n\\ApiN8n.csproj",
+        "packagesPath": "C:\\Users\\Alessandra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Alessandra\\Documents\\hackaton2\\Hackathon\\apis\\ApiN8n\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sofia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Alessandra\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"

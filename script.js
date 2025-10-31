@@ -58,14 +58,15 @@ async function enviarMensagem() {
     const typingDiv = mostrarTypingIndicator();
 
     try {
-        const response = await fetch('http://localhost:5180/webhook-test/feecdcd0-f2e5-47cb-a12f-37a5283268f8', {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify({ chatInput: mensagem })
-        });
+        const response = await fetch('http://localhost:5180/webhook/feecdcd0-f2e5-47cb-a12f-37a5283268f8', {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify({ chatinput: mensagem })  // aqui é o campo que a API espera
+});
+
 
         if (!response.ok) {
             throw new Error(`Erro na requisição: ${response.status}`);

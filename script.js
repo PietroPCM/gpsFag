@@ -1,122 +1,69 @@
-const messageInput = document.getElementById('messageInput');
-const sendButton = document.getElementById('sendButton');
-const chatMessages = document.getElementById('chatMessages');
-const newChatBtn = document.getElementById('newChatBtn');
 
+const blocos = {
+  bloco1: { lat: -24.9531, lng: -53.4567 },
+  bloco2: { lat: -24.9535, lng: -53.4570 },
+  bloco3: { lat: -24.9539, lng: -53.4573 },
+  blocoE: { lat: -24.9543, lng: -53.4576 }
+};
 
-function adicionarMensagemUsuario(texto) {
-    const div = document.createElement('div');
-    div.classList.add('message', 'user-message');
-    div.innerHTML = `
-        <div class="message-avatar"><i class="fas fa-user"></i></div>
-        <div class="message-content">
-            <div class="message-text"><p>${texto}</p></div>
-        </div>
-    `;
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+const params = new URLSearchParams(window.location.search);
+const destino = params.get("destino");
+const destinoCoords = blocos[destino];
 
+if (!destinoCoords) {
+  document.getElementById("status").textContent = "Destino inválido.";
+} else {
+  const map = L.map('map').setView([destinoCoords.lat, destinoCoords.lng], 18);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
 
-function mostrarTypingIndicator() {
-    const div = document.createElement('div');
-    div.classList.add('message', 'ai-message', 'typing-indicator');
-    div.innerHTML = `
-        <div class="message-avatar"><i class="fas fa-robot"></i></div>
-        <div class="message-content">
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-            <div class="typing-dot"></div>
-        </div>
-    `;
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-    return div;
-}
+  const destinoMarker = L.marker([destinoCoords.lat, destinoCoords.lng]).addTo(map)
+    .bindPopup(`Destino: ${destino}`).openPopup();
 
+  let userMarker = null;
+  let routeLine = null;
 
-function adicionarMensagemBot(texto) {
-    const div = document.createElement('div');
-    div.classList.add('message', 'ai-message');
-    div.innerHTML = `
-        <div class="message-avatar"><i class="fas fa-robot"></i></div>
-        <div class="message-content">
-            <div class="message-text"><p>${texto}</p></div>
-        </div>
-    `;
-    chatMessages.appendChild(div);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+  const apiKey = "eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImMwMzhiNzQxZGM3NjQzMjQ4ZDJjY2RhMzUzMWY5ZjRkIiwiaCI6Im11cm11cjY0In0=";
 
-async function enviarMensagem() {
-    const mensagem = messageInput.value.trim();
-    if (!mensagem) return;
+  function atualizarRota(lat, lng) {
+    document.getElementById("loader").style.display = "block";
+    const url = `https://api.openrouteservice.org/v2/directions/foot-walking?api_key=${apiKey}&start=${lng},${lat}&end=${destinoCoords.lng},${destinoCoords.lat}`;
 
-    adicionarMensagemUsuario(mensagem);
-    messageInput.value = '';
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const coords = data.features[0].geometry.coordinates.map(c => [c[1], c[0]]);
+        if (routeLine) map.removeLayer(routeLine);
+        routeLine = L.polyline(coords, { color: 'blue' }).addTo(map);
+        map.fitBounds(routeLine.getBounds());
 
-    const typingDiv = mostrarTypingIndicator();
+        const distancia = (data.features[0].properties.summary.distance / 1000).toFixed(2);
+        const tempo = Math.round(data.features[0].properties.summary.duration / 60);
+        document.getElementById("status").textContent = `Distância: ${distancia} km | Tempo: ${tempo} min`;
 
-    try {
-        const response = await fetch('http://localhost:5180/webhook/feecdcd0-f2e5-47cb-a12f-37a5283268f8', {
-    method: 'POST',
-    headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-    },
-    body: JSON.stringify({ chatinput: mensagem })  // aqui é o campo que a API espera
-});
+        const steps = data.features[0].properties.segments[0].steps;
+        document.getElementById("instrucoes").innerHTML = steps.map(s => `→ ${s.instruction}`).join('<br>');
 
+        document.getElementById("loader").style.display = "none";
+      });
+  }
 
-        if (!response.ok) {
-            throw new Error(`Erro na requisição: ${response.status}`);
-        }
+  navigator.geolocation.watchPosition((pos) => {
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
 
-        const texto = await response.text();
-        let resultado;
-        try {
-            resultado = JSON.parse(texto);
-            console.log('Resposta do servidor:', resultado);
-            if (resultado && typeof resultado.resposta === 'string') {
-                const respTexto = resultado.resposta.trim();
-                adicionarMensagemBot(respTexto);
-            } else if (typeof resultado === 'object') {
-                // Tenta mostrar o primeiro campo string do objeto
-                const valor = resultado.resposta || resultado.message || resultado.text || JSON.stringify(resultado);
-                adicionarMensagemBot(valor);
-            } else if (typeof resultado === 'string') {
-                adicionarMensagemBot(resultado);
-            } else {
-                adicionarMensagemBot("Recebido, mas formato inesperado.");
-            }
-        } catch (parseError) {
-            console.log('Texto recebido (não-JSON):', texto);
-            if (typeof texto === 'string' && texto.trim().length === 0) {
-                adicionarMensagemBot("O workflow do n8n não retornou conteúdo. Verifique o nó final do fluxo.");
-            } else {
-                adicionarMensagemBot(texto);
-            }
-        }
-    } catch (erro) {
-        console.error('Erro:', erro);
-        adicionarMensagemBot("Não foi possível processar sua mensagem. Por favor, tente novamente.");
-    } finally {
-        chatMessages.removeChild(typingDiv);
+    if (!userMarker) {
+      userMarker = L.marker([lat, lng], { icon: L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+        iconSize: [30, 30]
+      }) }).addTo(map);
+    } else {
+      userMarker.setLatLng([lat, lng]);
     }
+
+    atualizarRota(lat, lng);
+  }, () => {
+    document.getElementById("status").textContent = "Erro ao obter localização.";
+  });
 }
-
-
-
-
-sendButton.addEventListener('click', enviarMensagem);
-
-messageInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        enviarMensagem();
-    }
-});
-
-newChatBtn.addEventListener('click', () => {
-    chatMessages.innerHTML = '';
-});

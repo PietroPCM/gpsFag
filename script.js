@@ -34,37 +34,43 @@ const destinoKey = destinoParam === 'E' ? 'E' : destinoParam;
 const displayName = destinoKey === 'E' ? 'Bloco E' : destinoKey;
 const destinoCoords = blocos[destinoKey];
 
-// Atualiza nome do destino na UI
-if (destinoKey && document.getElementById('destination-name')) {
-  document.getElementById('destination-name').textContent = displayName;
-  if (document.getElementById('next-turn')) {
-    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
+// Função para inicializar mapa
+function initMap() {
+  try {
+    // Inicializa mapa
+    map = new maplibregl.Map({
+      container: 'map',
+      style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
+      center: destinoCoords || [-53.508413, -24.946182],
+      zoom: 17
+    });
+
+    // Adiciona marcador do destino
+    map.on('load', () => {
+      if (destinoCoords) {
+        destinationMarker = new maplibregl.Marker({ 
+          color: '#FF3B30',
+          scale: 1.2
+        })
+          .setLngLat(destinoCoords)
+          .setPopup(new maplibregl.Popup().setText(displayName))
+          .addTo(map);
+      }
+      
+      // Adiciona controles de navegação
+      map.addControl(new maplibregl.NavigationControl(), 'top-right');
+    });
+    
+    map.on('error', (e) => {
+      console.error('Map error:', e);
+      // Fallback para outro estilo
+      map.setStyle('https://demotiles.maplibre.org/style.json');
+    });
+    
+  } catch (error) {
+    console.error('Error initializing map:', error);
   }
 }
-
-// Inicializa mapa
-map = new maplibregl.Map({
-  container: 'map',
-  style: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
-  center: destinoCoords || [-53.508413, -24.946182],
-  zoom: 17
-});
-
-// Adiciona marcador do destino
-map.on('load', () => {
-  if (destinoCoords) {
-    destinationMarker = new maplibregl.Marker({ 
-      color: '#FF3B30',
-      scale: 1.2
-    })
-      .setLngLat(destinoCoords)
-      .setPopup(new maplibregl.Popup().setText(displayName))
-      .addTo(map);
-  }
-  
-  // Adiciona controles de navegação
-  map.addControl(new maplibregl.NavigationControl(), 'top-right');
-});
 
 // Função para pegar localização do usuário e calcular rota
 async function getRoute() {
@@ -86,7 +92,7 @@ async function getRoute() {
       </svg>
       <span>Iniciar Navegação</span>
     `;
-    document.getElementById('next-turn').textContent = blocosDesc[destinoNome] || '';
+    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
     return;
   }
 
@@ -191,8 +197,21 @@ async function getRoute() {
   });
 }
 
+// Atualiza nome do destino na UI
+if (destinoKey && document.getElementById('destination-name')) {
+  document.getElementById('destination-name').textContent = displayName;
+  if (document.getElementById('next-turn')) {
+    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
+  }
+}
+
 // Event listener do botão
 document.addEventListener('DOMContentLoaded', () => {
+  // Inicializa mapa quando DOM carregar
+  if (typeof maplibregl !== 'undefined') {
+    initMap();
+  }
+  
   const startBtn = document.getElementById('start-btn');
   if (startBtn) {
     startBtn.addEventListener('click', getRoute);

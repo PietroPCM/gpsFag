@@ -210,7 +210,7 @@
   left: 0;
   right: 0;
   z-index: 10;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0) 100%);
   padding: 50px 16px 16px;
   pointer-events: none;
 }
@@ -223,8 +223,8 @@
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.95);
-  border: none;
+  background: linear-gradient(135deg, rgba(0, 206, 209, 0.3) 0%, rgba(255, 0, 255, 0.2) 100%);
+  border: 2px solid rgba(0, 206, 209, 0.5);
   border-radius: 50%;
   width: 44px;
   height: 44px;
@@ -233,13 +233,14 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: var(--shadow-soft);
-  color: var(--fag-primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 206, 209, 0.2);
+  color: white;
 }
 
 .back-btn:hover {
-  background: white;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, rgba(0, 206, 209, 0.5) 0%, rgba(255, 0, 255, 0.4) 100%);
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 206, 209, 0.4), 0 0 30px rgba(255, 0, 255, 0.3);
 }
 
 .back-btn:active {
@@ -248,24 +249,26 @@
 
 .nav-info {
   flex: 1;
-  background: rgba(255, 255, 255, 0.95);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 206, 209, 0.05) 100%);
   backdrop-filter: blur(20px);
   padding: 14px 20px;
   border-radius: 20px;
-  box-shadow: var(--shadow-soft);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .nav-distance {
   font-size: 28px;
   font-weight: 700;
-  color: var(--fag-primary);
+  color: #00CED1;
   line-height: 1;
+  text-shadow: 0 2px 10px rgba(0, 206, 209, 0.5);
 }
 
 .nav-turn {
   font-size: 14px;
   font-weight: 600;
-  color: #666;
+  color: rgba(255, 255, 255, 0.9);
   margin-top: 4px;
 }
 
@@ -276,12 +279,13 @@
   left: 16px;
   right: 16px;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(0, 206, 209, 0.05) 100%);
   backdrop-filter: blur(20px);
   border-radius: 20px;
-  box-shadow: var(--shadow-strong);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
   overflow: hidden;
   animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 @keyframes slideDown {
@@ -300,13 +304,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .destination-name {
   font-size: 18px;
   font-weight: 700;
-  color: var(--fag-primary);
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 206, 209, 0.5);
 }
 
 .close-btn {
@@ -319,13 +324,13 @@
   justify-content: center;
   cursor: pointer;
   border-radius: 50%;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   transition: all 0.2s ease;
 }
 
 .close-btn:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--fag-primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
 }
 
 .info-card-body {
@@ -345,21 +350,22 @@
 }
 
 .info-item:first-child {
-  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .info-item:hover {
-  background: rgba(0, 51, 102, 0.05);
+  background: rgba(0, 206, 209, 0.1);
 }
 
 .info-item svg {
-  color: var(--fag-secondary);
+  color: #00CED1;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 206, 209, 0.3));
 }
 
 .info-label {
   font-size: 11px;
-  color: #999;
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -368,8 +374,9 @@
 .info-value {
   font-size: 18px;
   font-weight: 700;
-  color: var(--fag-primary);
+  color: #00CED1;
   margin-top: 2px;
+  text-shadow: 0 2px 10px rgba(0, 206, 209, 0.5);
 }
 
 /* Botões flutuantes */
@@ -403,13 +410,14 @@
 }
 
 .primary-btn {
-  background: var(--fag-secondary);
+  background: linear-gradient(135deg, #00CED1 0%, rgba(255, 0, 255, 0.5) 100%);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 206, 209, 0.3), 0 0 30px rgba(255, 0, 255, 0.2) !important;
 }
 
 .primary-btn:hover {
-  background: var(--fag-primary);
+  background: linear-gradient(135deg, #00b8bb 0%, rgba(255, 0, 255, 0.7) 100%);
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0, 102, 204, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 30px rgba(0, 206, 209, 0.5), 0 0 50px rgba(255, 0, 255, 0.3) !important;
 }
 
 .primary-btn:active {

@@ -1,19 +1,79 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mapa</title>
+  <title>Navegação FAG GPS</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div id="loader">Carregando rota...</div>
-  <div id="status">Obtendo localização...</div>
+<body class="map-page">
   <div id="map"></div>
-  <div id="instrucoes"></div>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Header com destino -->
+  <div class="nav-header">
+    <div class="nav-header-content">
+      <button class="back-btn" onclick="history.back()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
+      <div class="nav-info">
+        <div class="nav-distance" id="distance">-- km</div>
+        <div class="nav-turn" id="next-turn">Selecione um destino</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info card no topo -->
+  <div class="info-card" id="info-card">
+    <div class="info-card-header">
+      <span class="destination-name" id="destination-name">Destino</span>
+      <button class="close-btn" onclick="document.getElementById('info-card').style.display='none'">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="info-card-body">
+      <div class="info-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="10" r="3"/>
+          <path d="M12 21.7C18 17.2 22 12.6 22 8a10 10 0 0 0-20 0c0 4.6 4 9.2 10 13.7z"/>
+        </svg>
+        <div>
+          <div class="info-label">Distância</div>
+          <div class="info-value" id="info-distance">--</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <div>
+          <div class="info-label">Tempo estimado</div>
+          <div class="info-value" id="info-duration">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botão de ação flutuante -->
+  <div class="floating-actions">
+    <button id="start-btn" class="action-btn primary-btn">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <span>Iniciar Navegação</span>
+    </button>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

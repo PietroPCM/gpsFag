@@ -3,109 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAG Navigator - Guia GPS da Faculdade</title>
+  <title>FAG GPS - Navegação Inteligente</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="hero-section">
-    <div class="wave wave1"></div>
-    <div class="wave wave2"></div>
-    <div class="wave wave3"></div>
-    <header>
-      <div class="logo-container">
-        <img src="assets/logo.png" alt="Logo FAG" class="logo">
-      </div>
-      <h1 class="titulo-principal">
-        <i class="fas fa-map-marked-alt"></i>
-        FAG Navigator
-      </h1>
-      <p class="subtitulo">Seu GPS pessoal para navegar pela faculdade</p>
-    </header>
+<body class="index-page">
+  <div class="home-container">
+    <div class="logo-container">
+      <img src="download.jpeg" alt="Logo FAG" class="brand-logo" />
+      <h2 class="logo-text">FAG NAVEGATOR</h2>
+    </div>
+    
+    <div class="welcome-section">
+      <h1>Para onde você deseja ir?</h1>
+      <p class="subtitle">Selecione seu destino e encontre o caminho mais rápido</p>
+    </div>
+    
+    <div class="buttons">
+      <a href="mapa.html?destino=Bloco1" class="btn destination-btn">
+        <span class="btn-icon">🏢</span>
+        <span class="btn-content">
+          <strong>Bloco 1</strong>
+        </span>
+      </a>
+      
+      <a href="mapa.html?destino=Bloco2" class="btn destination-btn">
+        <span class="btn-icon">🎓</span>
+        <span class="btn-content">
+          <strong>Bloco 2</strong>
+        </span>
+      </a>
+      
+      <a href="mapa.html?destino=Bloco3" class="btn destination-btn">
+        <span class="btn-icon">⚖️</span>
+        <span class="btn-content">
+          <strong>Bloco 3</strong>
+        </span>
+      </a>
+      
+      <a href="mapa.html?destino=E" class="btn destination-btn">
+        <span class="btn-icon">🔧</span>
+        <span class="btn-content">
+          <strong>Bloco E</strong>
+          <small>Engenharias</small>
+        </span>
+      </a>
+      
+      <a href="mapa.html?destino=Bloco4" class="btn destination-btn">
+        <span class="btn-icon">💻</span>
+        <span class="btn-content">
+          <strong>Bloco 4</strong>
+        </span>
+      </a>
+    </div>
+    
+    <div class="footer-note">
+      <p>📍 Centro Universitário FAG - Cascavel</p>
+    </div>
   </div>
-
-  <main>
-    <div class="welcome-card">
-      <i class="fas fa-graduation-cap"></i>
-      <h2>Bem-vindo à FAG!</h2>
-      <p>Escolha o bloco de destino e vamos te guiar até lá</p>
-    </div>
-
-    <div class="blocos-grid">
-      <a href="mapa.html?destino=bloco1" class="bloco-card" data-bloco="1">
-        <div class="bloco-icon">
-          <i class="fas fa-building"></i>
-        </div>
-        <div class="bloco-info">
-          <h3>Bloco 1</h3>
-          <p>Administração e Secretaria</p>
-        </div>
-        <div class="bloco-arrow">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
-
-      <a href="mapa.html?destino=bloco2" class="bloco-card" data-bloco="2">
-        <div class="bloco-icon">
-          <i class="fas fa-flask"></i>
-        </div>
-        <div class="bloco-info">
-          <h3>Bloco 2</h3>
-          <p>Laboratórios e Salas</p>
-        </div>
-        <div class="bloco-arrow">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
-
-      <a href="mapa.html?destino=bloco3" class="bloco-card" data-bloco="3">
-        <div class="bloco-icon">
-          <i class="fas fa-book"></i>
-        </div>
-        <div class="bloco-info">
-          <h3>Bloco 3</h3>
-          <p>Biblioteca e Estudos</p>
-        </div>
-        <div class="bloco-arrow">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
-
-      <a href="mapa.html?destino=bloco4" class="bloco-card" data-bloco="4">
-        <div class="bloco-icon">
-          <i class="fas fa-chalkboard-teacher"></i>
-        </div>
-        <div class="bloco-info">
-          <h3>Bloco 4</h3>
-          <p>Aulas e Auditórios</p>
-        </div>
-        <div class="bloco-arrow">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
-
-      <a href="mapa.html?destino=blocoE" class="bloco-card" data-bloco="E">
-        <div class="bloco-icon">
-          <i class="fas fa-dumbbell"></i>
-        </div>
-        <div class="bloco-info">
-          <h3>Bloco E</h3>
-          <p>Ginásio e Esportes</p>
-        </div>
-        <div class="bloco-arrow">
-          <i class="fas fa-arrow-right"></i>
-        </div>
-      </a>
-    </div>
-
-    <div class="info-card">
-      <i class="fas fa-info-circle"></i>
-      <p>Para uma melhor experiência, permita o acesso à sua localização quando solicitado</p>
-    </div>
-  </main>
-
-  <footer>
-    <p>&copy; 2024 FAG - Faculdade Assis Gurgacz</p>
-  </footer>
 </body>
 </html>

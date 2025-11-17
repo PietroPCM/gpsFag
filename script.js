@@ -129,14 +129,7 @@ async function getRoute() {
       navigator.geolocation.clearWatch(watchId);
       watchId = null;
     }
-    isNavigating = false;
-    document.getElementById('start-btn').innerHTML = `
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M8 5v14l11-7z"/>
-      </svg>
-      <span>Iniciar Navegação</span>
-    `;
-    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
+    updateButtonState(false);
     return;
   }
 
@@ -151,9 +144,21 @@ async function getRoute() {
       const distanceKm = (route.distance / 1000).toFixed(2);
       const durationMin = Math.round(route.duration / 60);
       
-      document.getElementById('distance').textContent = distanceKm + ' km';
-      document.getElementById('info-distance').textContent = distanceKm + ' km';
-      document.getElementById('info-duration').textContent = durationMin + ' min';
+      const distanceEl = document.getElementById('distance');
+      const navDurationEl = document.getElementById('nav-duration');
+      const infoDistanceEl = document.getElementById('info-distance');
+      const infoDurationEl = document.getElementById('info-duration');
+      
+      if (distanceEl) distanceEl.textContent = distanceKm + ' km';
+      if (navDurationEl) navDurationEl.textContent = durationMin + ' min';
+      if (infoDistanceEl) infoDistanceEl.textContent = distanceKm + ' km';
+      if (infoDurationEl) infoDurationEl.textContent = durationMin + ' min';
+      
+      // Garante que o card de informações está visível
+      const infoCard = document.getElementById('info-card');
+      if (infoCard) {
+        infoCard.style.display = 'block';
+      }
       
       // Adiciona rota ao mapa
       if (map.getSource('route')) {
@@ -199,16 +204,13 @@ async function getRoute() {
       map.fitBounds(bounds, { padding: 100 });
 
       // Ativa navegação
-      isNavigating = true;
-      document.getElementById('start-btn').innerHTML = `
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-          <rect x="6" y="4" width="4" height="16"/>
-          <rect x="14" y="4" width="4" height="16"/>
-        </svg>
-        <span>Parar Navegação</span>
-      `;
+      updateButtonState(true);
       
-    document.getElementById('next-turn').textContent = 'Siga a rota indicada';
+      // Atualiza mensagem de navegação
+      const nextTurnEl = document.getElementById('next-turn');
+      if (nextTurnEl) {
+        nextTurnEl.textContent = 'Siga a rota indicada';
+      }
 
       // Atualiza posição do usuário em tempo real
       watchId = navigator.geolocation.watchPosition((pos) => {
@@ -239,10 +241,70 @@ async function getRoute() {
   });
 }
 
+// Função para atualizar o estado do botão
+function updateButtonState(navigating) {
+  const startBtn = document.getElementById('start-btn');
+  if (!startBtn) return;
+  
+  isNavigating = navigating;
+  
+  if (isNavigating) {
+    startBtn.innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="6" y="4" width="4" height="16"/>
+        <rect x="14" y="4" width="4" height="16"/>
+      </svg>
+      <span>Parar Navegação</span>
+    `;
+    startBtn.classList.add('navigating');
+  } else {
+    startBtn.innerHTML = `
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <span>Iniciar Navegação</span>
+    `;
+    startBtn.classList.remove('navigating');
+  }
+}
+
 // Event listener do botão
 document.addEventListener('DOMContentLoaded', () => {
   const startBtn = document.getElementById('start-btn');
   if (startBtn) {
-    startBtn.addEventListener('click', getRoute);
+    startBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      if (isNavigating) {
+        // Parar navegação
+        if (watchId !== null) {
+          navigator.geolocation.clearWatch(watchId);
+          watchId = null;
+        }
+        updateButtonState(false);
+        
+        // Atualizar mensagem
+        const nextTurnEl = document.getElementById('next-turn');
+        if (nextTurnEl) {
+          nextTurnEl.textContent = 'Navegação interrompida';
+          // Restaurar mensagem após 3 segundos
+          setTimeout(() => {
+            if (!isNavigating && nextTurnEl) {
+              nextTurnEl.textContent = blocosDesc[destinoKey] || '';
+            }
+          }, 3000);
+        }
+      } else {
+        // Iniciar navegação
+        getRoute();
+      }
+    });
+    
+    // Garante que o card de informações está visível
+    const infoCard = document.getElementById('info-card');
+    if (infoCard) {
+      infoCard.style.display = 'block';
+    }
   }
 });

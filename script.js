@@ -36,6 +36,7 @@ const destinoCoords = blocos[destinoKey];
 const ORS_KEY_STORAGE = 'ors_api_key';
 const DEFAULT_ORS_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjZmYWIwMzg3Y2FiMTQ4ODk5N2M5MTBlMmIyNDA0ZmU1IiwiaCI6Im11cm11cjY0In0='; // opcional: substitua pela sua chave fixa para testes
 let orsApiKey = localStorage.getItem(ORS_KEY_STORAGE) || DEFAULT_ORS_KEY;
+const STADIA_API_KEY = 'bfaf1fba-fd7c-4d0a-b891-347685c6a547'; // informe aqui sua chave do StadiaMaps para o mapa base
 
 function ensureOrsKey() {
   if (!orsApiKey) {
@@ -88,9 +89,13 @@ if (destinoKey && document.getElementById('destination-name')) {
 }
 
 // Inicializa mapa
+const mapStyleUrl = STADIA_API_KEY
+  ? `https://tiles.stadiamaps.com/styles/osm_bright.json?api_key=${STADIA_API_KEY}`
+  : 'https://tiles.stadiamaps.com/styles/osm_bright.json';
+
 map = new maplibregl.Map({
   container: 'map',
-  style: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
+  style: mapStyleUrl,
   center: destinoCoords || [-53.508413, -24.946182],
   zoom: 17
 });

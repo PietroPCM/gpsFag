@@ -23,17 +23,19 @@
   color: #FFFFFF;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start; /* não centraliza verticalmente */
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
   box-sizing: border-box;
   background-image: 
     radial-gradient(circle at 20% 30%, rgba(0, 206, 209, 0.1) 0%, transparent 20%),
     radial-gradient(circle at 80% 70%, rgba(255, 0, 255, 0.1) 0%, transparent 25%),
     radial-gradient(circle at 50% 20%, rgba(0, 206, 209, 0.05) 0%, transparent 25%),
     radial-gradient(circle at 30% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 25%);
+  overflow-y: auto; /* libera rolagem */
+  padding-bottom: 150px; /* espaço extra só pra rolar */
 }
+
 
 /* Efeito de formas geométricas animadas */
 .index-page::before {

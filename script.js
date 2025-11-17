@@ -33,44 +33,83 @@ const destinoKey = destinoParam === 'E' ? 'E' : destinoParam;
 // nome exibido na UI
 const displayName = destinoKey === 'E' ? 'Bloco E' : destinoKey;
 const destinoCoords = blocos[destinoKey];
+const ORS_KEY_STORAGE = 'ors_api_key';
+const DEFAULT_ORS_KEY = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjZmYWIwMzg3Y2FiMTQ4ODk5N2M5MTBlMmIyNDA0ZmU1IiwiaCI6Im11cm11cjY0In0='; // opcional: substitua pela sua chave fixa para testes
+let orsApiKey = localStorage.getItem(ORS_KEY_STORAGE) || DEFAULT_ORS_KEY;
 
-// Função para inicializar mapa
-function initMap() {
-  try {
-    // Inicializa mapa
-    map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://api.maptiler.com/maps/streets-v2/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL',
-      center: destinoCoords || [-53.508413, -24.946182],
-      zoom: 17
-    });
-
-    // Adiciona marcador do destino
-    map.on('load', () => {
-      if (destinoCoords) {
-        destinationMarker = new maplibregl.Marker({ 
-          color: '#FF3B30',
-          scale: 1.2
-        })
-          .setLngLat(destinoCoords)
-          .setPopup(new maplibregl.Popup().setText(displayName))
-          .addTo(map);
-      }
-      
-      // Adiciona controles de navegação
-      map.addControl(new maplibregl.NavigationControl(), 'top-right');
-    });
-    
-    map.on('error', (e) => {
-      console.error('Map error:', e);
-      // Fallback para outro estilo
-      map.setStyle('https://demotiles.maplibre.org/style.json');
-    });
-    
-  } catch (error) {
-    console.error('Error initializing map:', error);
+function ensureOrsKey() {
+  if (!orsApiKey) {
+    orsApiKey = prompt('Informe sua chave da OpenRouteService para rotas a pé:');
+    if (orsApiKey) {
+      localStorage.setItem(ORS_KEY_STORAGE, orsApiKey);
+    } else {
+      throw new Error('Chave da OpenRouteService é obrigatória para traçar rotas de pedestres.');
+    }
   }
 }
+
+async function fetchPedestrianRoute(start, end) {
+  ensureOrsKey();
+  const response = await fetch('https://api.openrouteservice.org/v2/directions/foot-walking/geojson', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': orsApiKey
+    },
+    body: JSON.stringify({
+      coordinates: [start, end],
+      instructions: false
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error('Falha na OpenRouteService: ' + response.statusText);
+  }
+
+  const data = await response.json();
+  if (!data.features || data.features.length === 0) {
+    throw new Error('Nenhuma rota retornada pela OpenRouteService.');
+  }
+
+  const feature = data.features[0];
+  return {
+    geometry: feature.geometry,
+    distance: feature.properties.summary.distance,
+    duration: feature.properties.summary.duration
+  };
+}
+
+// Atualiza nome do destino na UI
+if (destinoKey && document.getElementById('destination-name')) {
+  document.getElementById('destination-name').textContent = displayName;
+  if (document.getElementById('next-turn')) {
+    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
+  }
+}
+
+// Inicializa mapa
+map = new maplibregl.Map({
+  container: 'map',
+  style: 'https://tiles.stadiamaps.com/styles/osm_bright.json',
+  center: destinoCoords || [-53.508413, -24.946182],
+  zoom: 17
+});
+
+// Adiciona marcador do destino
+map.on('load', () => {
+  if (destinoCoords) {
+    destinationMarker = new maplibregl.Marker({ 
+      color: '#FF3B30',
+      scale: 1.2
+    })
+      .setLngLat(destinoCoords)
+      .setPopup(new maplibregl.Popup().setText(displayName))
+      .addTo(map);
+  }
+  
+  // Adiciona controles de navegação
+  map.addControl(new maplibregl.NavigationControl(), 'top-right');
+});
 
 // Função para pegar localização do usuário e calcular rota
 async function getRoute() {
@@ -101,10 +140,7 @@ async function getRoute() {
     const end = destinoCoords;
 
     try {
-      const url = `https://router.project-osrm.org/route/v1/driving/${start.join(',')};${end.join(',')}?overview=full&geometries=geojson`;
-      const res = await fetch(url);
-      const data = await res.json();
-      const route = data.routes[0];
+      const route = await fetchPedestrianRoute(start, end);
 
       // Atualiza UI
       const distanceKm = (route.distance / 1000).toFixed(2);
@@ -135,7 +171,8 @@ async function getRoute() {
           'source': 'route',
           'paint': {
             'line-color': '#0066CC',
-            'line-width': 6
+            'line-width': 6,
+            'line-opacity': 0.95
           }
         });
       }
@@ -166,7 +203,7 @@ async function getRoute() {
         <span>Parar Navegação</span>
       `;
       
-      document.getElementById('next-turn').textContent = 'Siga a rota indicada';
+    document.getElementById('next-turn').textContent = 'Siga a rota indicada';
 
       // Atualiza posição do usuário em tempo real
       watchId = navigator.geolocation.watchPosition((pos) => {
@@ -185,7 +222,7 @@ async function getRoute() {
 
     } catch (error) {
       console.error('Erro ao calcular rota:', error);
-      alert("Erro ao calcular a rota. Tente novamente.");
+      alert("Erro ao calcular a rota. Verifique sua chave da OpenRouteService e tente novamente.");
     }
   }, (err) => {
     console.error('Erro ao obter localização:', err);
@@ -197,21 +234,8 @@ async function getRoute() {
   });
 }
 
-// Atualiza nome do destino na UI
-if (destinoKey && document.getElementById('destination-name')) {
-  document.getElementById('destination-name').textContent = displayName;
-  if (document.getElementById('next-turn')) {
-    document.getElementById('next-turn').textContent = blocosDesc[destinoKey] || '';
-  }
-}
-
 // Event listener do botão
 document.addEventListener('DOMContentLoaded', () => {
-  // Inicializa mapa quando DOM carregar
-  if (typeof maplibregl !== 'undefined') {
-    initMap();
-  }
-  
   const startBtn = document.getElementById('start-btn');
   if (startBtn) {
     startBtn.addEventListener('click', getRoute);
